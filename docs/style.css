@@ -1,0 +1,181 @@
+
+body{
+    margin: 0px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+#controller{
+    background-color: rgb(46, 46, 46);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#fullscreen-button{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    fill: white;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 10px;
+    border-style: ridge;
+}
+
+#connection-status{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 20%;
+    width: 70px;
+    text-align: center;
+}
+
+#connection-status.disconnected{
+    fill:red;
+}
+
+#connection-status.connected{
+    fill:green;
+}
+
+.joystick-area{
+    position: absolute; 
+    background-color: rgba(128, 153, 153, 0.518);
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+.joystick-element{
+    background-color: rgba(62, 74, 74, 0.518);
+    left: 50%;
+    bottom: 50%;
+    height: 66%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform-origin: center;
+    transform: translate(-50%, 50%);
+    position: absolute;
+}
+
+#joystick-buttons{
+    position: absolute;
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    font-size: xx-large;
+}
+
+#joystick-buttons button{
+    font-size: inherit;
+    border-radius: 50%;
+    border-style: ridge;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.592);
+}
+
+#joystick-buttons #a-button{
+    background-color: green;
+}
+
+#joystick-buttons #b-button{
+    background-color: red;
+}
+
+#joystick-buttons #x-button{
+    background-color: rgb(0, 204, 255);
+}
+
+#joystick-buttons #y-button{
+    background-color: yellow;
+}
+
+#dpad{
+    position: absolute;
+    aspect-ratio: 1;
+    font-size: xx-large;
+}
+
+#dpad button {
+    font-size: inherit;
+    border-style: none;
+    background-color: transparent;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.592);
+    width: 50%;
+    position: absolute;
+    transform-origin: top;
+    height: 50%;
+    left: 20%;
+    top: 50%;
+    pointer-events: painted;
+    fill: black;
+}
+
+#input-block {
+    position:absolute;
+    left: 4%; right: 4%; height: 10%; top: 60%;
+    transition: top 300ms ease 0s;
+}
+
+#input-block input {
+    width: 100%;
+    height: 45px;
+    font-size: x-large;
+    font-family: Verdana;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#input-block button {
+    width: 100%;
+    height: 45px;
+    background-color: #3dd434;
+    border: none;
+    font-size: x-large;
+    font-family: Verdana;
+}
+
+#portrait-mode {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(49, 54, 63);
+}
+
+
+#switchback-logo {
+    font-size: 64px;
+    color: green;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+}
+
+#switchback-logo svg{
+    height: 100%;
+    width: 100%;
+}
+
+
+#rotate-phone-text {
+    color: white;
+    font-size: 45px;
+    text-align: center;
+}
