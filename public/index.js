@@ -5,15 +5,20 @@ const CONTROL_SCHEME = {
 }
 
 function connect(){
-  const wsUri = `wss://192.168.4.60:12345/`;
+  const wsUri = `${location.origin.replace(/^http/, 'ws')}`;
+  const url_params = new URLSearchParams(window.location.search);
+  document.session_id = url_params.get('session');
+
   document.websocket = new WebSocket(wsUri);
 
   document.websocket.onopen = (e) => {
+
     setConnectionStatus("connected");
-    const player_hash = {
+    doSend({}, type="join");
+    const hash_msg = {
       player_hash: getPlayerHash()
     }
-    doSend(player_hash);
+    doSend(hash_msg);
   };
   
   document.websocket.onclose = (e) => {
@@ -56,9 +61,15 @@ function getPlayerHash(){
   }
 }
 
-function doSend(message) {
+function doSend(data, type="message") {
   if(document.websocket == undefined || document.websocket.readyState != 1){
     return
+  }
+  const message = {
+    type: type,
+    role: "phone", // TODO: Change
+    session: document.session_id,
+    data: data
   }
   let messageString = JSON.stringify(message);
   document.websocket.send(messageString);
