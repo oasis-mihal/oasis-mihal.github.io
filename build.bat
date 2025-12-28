@@ -1,0 +1,1 @@
+pkg server.js --targets node18-win-x64

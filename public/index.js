@@ -14,11 +14,11 @@ function connect(){
   document.websocket.onopen = (e) => {
 
     setConnectionStatus("connected");
-    doSend({}, type="join");
+    doSend({}, type="join", relay_type="join");
     const hash_msg = {
       player_hash: getPlayerHash()
     }
-    doSend(hash_msg);
+    doSend(hash_msg, type="join");
   };
   
   document.websocket.onclose = (e) => {
@@ -47,6 +47,21 @@ function connect(){
   };
 }
 
+function startMotion(){
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission().then(response => {
+      if (response === 'granted') {
+        window.addEventListener('deviceorientation', sendRotation);
+        window.addEventListener('devicemotion', sendAcceleration);
+      }
+    }).catch(console.error);
+  } else {
+    window.addEventListener('deviceorientation', sendRotation);
+    window.addEventListener('devicemotion', sendAcceleration, true);
+    console.log("Orientation tracking started (no permission needed).");
+  }
+}
+
 function getPlayerHash(){
   player_hash = readCookie("player_hash")
   if (player_hash){
@@ -61,11 +76,12 @@ function getPlayerHash(){
   }
 }
 
-function doSend(data, type="message") {
+function doSend(data, type="message", relay_type="forward") {
   if(document.websocket == undefined || document.websocket.readyState != 1){
     return
   }
   const message = {
+    relay_type: relay_type,
     type: type,
     role: "phone", // TODO: Change
     session: document.session_id,
@@ -73,6 +89,7 @@ function doSend(data, type="message") {
   }
   let messageString = JSON.stringify(message);
   document.websocket.send(messageString);
+  writeToScreen(messageString);
 }
 
 function writeToScreen(message) {
@@ -89,6 +106,30 @@ function setConnectionStatus(status) {
   else if(status == "disconnected"){
     $("#connection-status").addClass("disconnected")
   }
+}
+
+function sendRotation(event) {
+  console.log("Rotation detected");
+  const data = {
+    gyro: {
+      alpha: event.alpha,
+      beta: event.beta,
+      gamma: event.gamma
+    }
+  };
+  doSend(data);
+}
+
+function sendAcceleration(event) {
+  console.log("Acceleration detected");
+  const data = {
+    accel: {
+      x: event.accelerationIncludingGravity?.x,
+      y: event.accelerationIncludingGravity?.y,
+      z: event.accelerationIncludingGravity?.z
+    }
+  };
+  doSend(data);
 }
 
 
